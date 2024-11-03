@@ -24,11 +24,11 @@ export async function PUT(req: NextRequest, context: Context<{ id: number }>) {
 
   try {
     const itemToSave = await req.json() as unknown as Partial<Task>
-    if (itemToSave.priority) {
-      itemToSave.priority = Priority[itemToSave.priority]
-    }
     if (itemToSave.dueDate) {
       itemToSave.dueDate = new Date(itemToSave.dueDate)
+    }
+    if (itemToSave.statusId) {
+      itemToSave.statusId = Number(itemToSave.statusId)
     }
     const updatedTask = await prisma.task.update({
       where: { id: Number(id) },

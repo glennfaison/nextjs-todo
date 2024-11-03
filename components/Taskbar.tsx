@@ -37,6 +37,7 @@ export default function Taskbar({ onOpenTaskModal, onOpenStatusModal, onFilterCh
   }
 
   const handleViewChange = (value: string) => {
+		if (!value) return;
     onViewChange(value)
   }
 

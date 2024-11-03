@@ -19,7 +19,6 @@ export default function TaskForm({ onTaskCreated, statuses, selectedTask }: Task
   const [statusId, setStatusId] = useState(selectedTask?.statusId || '')
 
   const handleSubmit = async (e: React.FormEvent) => {
-    console.log({ title, description, dueDate, priority, statusId })
     e.preventDefault()
     const requestUrl = selectedTask ? '/api/tasks/' + selectedTask.id : '/api/tasks'
     const requestMethod = selectedTask ? 'PUT' : 'POST'
