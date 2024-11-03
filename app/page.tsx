@@ -9,6 +9,7 @@ import StatusForm from '@/components/StatusForm'
 import { Task, Status } from '@prisma/client'
 import Taskbar from '@/components/Taskbar'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/Dialog'
+import ListView from '@/components/ListView'
 
 export default function Home() {
   const [statuses, setStatuses] = useState<Status[]>([])
@@ -19,6 +20,7 @@ export default function Home() {
   const [statusFilter, setStatusFilter] = useState<string>('')
   const [taskFilter, setTaskFilter] = useState<string>('')
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
+  const [view, setView] = useState('kanban')
 
   const fetchTasks = async () => {
     const res = await fetch('/api/tasks')
@@ -67,6 +69,10 @@ export default function Home() {
     // router.push(`/tasks/${taskId}`)
   }
 
+  const handleViewChange = (view: string) => {
+    setView(view)
+  }
+
   useEffect(() => {
     fetchStatuses()
     fetchTasks()
@@ -94,13 +100,21 @@ export default function Home() {
         onOpenTaskModal={() => setIsTaskModalOpen(true)}
         onOpenStatusModal={() => setIsStatusModalOpen(true)}
         onFilterChange={handleFilterChange}
+        onViewChange={handleViewChange}
         statuses={statuses}
+        view={view}
       />
       <br />
 
-      <DndProvider backend={HTML5Backend}>
-        <KanbanBoard tasks={filteredTasks} statuses={statuses} onMoveTask={handleTaskMove} onViewTask={handleViewTask} />
-      </DndProvider>
+      {view === 'kanban' && (
+        <DndProvider backend={HTML5Backend}>
+          <KanbanBoard tasks={filteredTasks} statuses={statuses} onMoveTask={handleTaskMove} onViewTask={handleViewTask} />
+        </DndProvider>
+      )}
+
+      {view === 'list' && (
+        <ListView tasks={filteredTasks} statuses={statuses} onViewTask={handleViewTask} />
+      )}
 
       <template>
         <Dialog open={isTaskModalOpen} onOpenChange={setIsTaskModalOpen}>
