@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js'
+import { Task } from '@prisma/client'
 
 ChartJS.register(
   CategoryScale,
@@ -22,7 +23,7 @@ ChartJS.register(
 )
 
 export default function Dashboard() {
-  const [reportData, setReportData] = useState(null)
+  const [reportData, setReportData] = useState()
 
   useEffect(() => {
     fetchReportData()

@@ -1,4 +1,4 @@
-import { PrismaClient, Task } from '@prisma/client'
+import { Prisma, PrismaClient } from '@prisma/client'
 import { NextRequest } from 'next/server'
 
 const prisma = new PrismaClient()
@@ -12,12 +12,13 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const { title, description, dueDate, priority, statusId } = await req.json()
-  const itemToSave: Partial<Task> = {
+  const itemToSave: Prisma.TaskCreateInput = {
     title,
     description,
     dueDate: new Date(dueDate),
     priority,
-    statusId: Number(statusId),
+    // statusId: Number(statusId),
+    status: { connect: { id: Number(statusId) } },
   }
   const task = await prisma.task.create({
     data: itemToSave,
