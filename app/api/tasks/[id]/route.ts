@@ -1,4 +1,4 @@
-import { Priority, PrismaClient, Task } from '@prisma/client'
+import { PrismaClient, Task } from '@prisma/client'
 import { NextRequest, NextResponse } from 'next/server'
 
 const prisma = new PrismaClient()

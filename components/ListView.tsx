@@ -26,7 +26,7 @@ export default function ListView({ tasks, statuses, onViewTask }: ListViewProps)
       })
       setTasksToDisplay(sortedTasks)
     }
-  }, [sort?.priority, tasks])
+  }, [sort?.priority, tasksToDisplay])
 
   useEffect(() => {
     if (sort?.dueDate && ['asc', 'desc'].includes(sort.dueDate)) {
@@ -37,7 +37,7 @@ export default function ListView({ tasks, statuses, onViewTask }: ListViewProps)
       })
       setTasksToDisplay(sortedTasks)
     }
-  }, [sort?.dueDate, tasks])
+  }, [sort?.dueDate, tasksToDisplay])
 
   return (
     <div className="flex flex-col overflow-auto bg-gray-100 p-2 gap-2">
